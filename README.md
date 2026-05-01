@@ -10,16 +10,26 @@ chmod +x scripts/run_patch_artifact_probe_50.sh
 ./scripts/run_patch_artifact_probe_50.sh
 ```
 
+For a larger exploratory scan:
+
+```bash
+chmod +x scripts/run_patch_artifact_probe_500.sh
+./scripts/run_patch_artifact_probe_500.sh
+```
+
 The script only loads the LLaVA vision tower weights from the local HF
 safetensors shards. It does not load the 7B language model and does not generate
 captions.
 
 The default sampler keeps images with one or two non-crowd COCO boxes whose
-dominant box covers 5%-65% of the image, then samples 50 clear foreground cases.
+dominant box covers 5%-65% of the image, then samples clear foreground cases.
+The 50-image wrapper saves overlays for quick manual inspection. The 500-image
+wrapper skips overlays by default and writes only CSV/JSON/NPZ artifacts.
 
 ## Outputs
 
-The default output directory is `runs/patch_artifact_probe_50/`.
+The default output directory is `runs/patch_artifact_probe_50/` or
+`runs/patch_artifact_probe_500/`, depending on the wrapper.
 
 - `patch_artifact_metrics.csv`: one row per sampled image, sorted by artifact strength.
 - `summary.json`: aggregate top-1 background rate and top-k background ratios.
